@@ -165,5 +165,15 @@
                 <Slider Maximum="100" Value="50" Width="100" Margin="10,0" VerticalAlignment="Center" Name="slVolume" ValueChanged="VolumeSlider_ValueChanged"/>
             </StackPanel>
         </Grid>
+
+        <!-- Progress Bar -->
+        <ProgressBar Minimum="0" 
+            Maximum="100" 
+            Value="{Binding MusicPlayerMenager.CurrentSongPlayback.Value}" 
+            Height="5" 
+            Background="#3A3A3A" 
+            Foreground="#1DB954" 
+            VerticalAlignment="Bottom"
+            Width="Auto"/>
     </Grid>
 </Window>
