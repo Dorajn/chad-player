@@ -14,6 +14,7 @@ public class MainViewModel
     public MusicPlayerMenager MusicPlayerMenager { get; set; }
 
     private DispatcherTimer _timer;
+    public string CurrentPlaylist;
 
     public MainViewModel()
     {
@@ -43,6 +44,11 @@ public class MainViewModel
         {
             LeafNodes.Add(new LeafNode(playlist, MusicPlayerMenager.MusicFilesList));
         }
+
+        foreach (var leafNode in LeafNodes)
+        {
+            leafNode.PlaylistSetEvent += PlaylistNameSet;
+        }
     }
 
     public void VolumeSlider_ValueChanged(
@@ -54,5 +60,10 @@ public class MainViewModel
         float newVolume = slVolume / 100;
         Console.WriteLine(newVolume);
         MusicPlayerMenager.Player.Volume(newVolume);
+    }
+
+    public void PlaylistNameSet(string playlistName)
+    {
+        CurrentPlaylist = playlistName;
     }
 }

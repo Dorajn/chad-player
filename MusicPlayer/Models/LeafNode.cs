@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Drawing;
 using System.Windows.Input;
 using MusicPlayer.Utils;
 
@@ -8,6 +9,13 @@ public class LeafNode
 {
     public string PlaylistName { get; set; }
     public ICommand ButtonCommand { get; set; }
+    public delegate void PlaylistSetter(string playlistName);
+    public event PlaylistSetter PlaylistSetEvent;
+
+    public void OnPlaylistSetEvent(string playlistName)
+    {
+        PlaylistSetEvent?.Invoke(playlistName);
+    }
 
     public LeafNode(Playlist playlist, ObservableCollection<MusicFile> musicFilesList)
     {
@@ -18,8 +26,6 @@ public class LeafNode
     private void ExecuteCommand(ObservableCollection<MusicFile> musicFilesList)
     {
         musicFilesList.Clear();
-
-        musicFilesList.Add(new MusicFile { Playlist = PlaylistName });
 
         foreach (var audioFile in Data.FetchAudioFiles(Metadata.absolutePath + "\\" + PlaylistName))
         {
@@ -41,6 +47,8 @@ public class LeafNode
                     Artist = AudioPlayerNAudio.GetSongArtist(filePath),
                 }
             );
+            
         }
+        OnPlaylistSetEvent(PlaylistName);
     }
 }

@@ -25,7 +25,7 @@ public partial class MainWindow : Window
         if (e.Data.GetDataPresent(DataFormats.FileDrop))
         {
             string[] audioFilePaths = (string[])e.Data.GetData(DataFormats.FileDrop);
-            Data.AddAudioFiles(MusicPlayerMenager.MusicFilesList[0].Playlist, audioFilePaths);
+            Data.AddAudioFiles(mainViewModel.CurrentPlaylist, audioFilePaths);
         }
     }
 }
