@@ -30,6 +30,8 @@ public class MainViewModel
     {
         _timer.Interval = TimeSpan.FromSeconds(1);
         _timer.Tick += ShowTrackPercentage;
+        _timer.Tick += MusicPlayerMenager.checkIfSongEnded;
+        _timer.Tick += MusicPlayerMenager.GetSongPlayback;
         _timer.Start();
     }
 

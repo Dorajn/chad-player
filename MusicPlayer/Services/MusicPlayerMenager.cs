@@ -22,6 +22,7 @@ public class MusicPlayerMenager
     private static bool isPlaying { get; set; } = false;
     public static ObservableProperty<string> CurrentButtonSign { get; set; }
     private static int CurrentSongIndex = 0;
+    public static ObservableProperty<double> CurrentSongPlayback { get; set; }
 
     public MusicPlayerMenager()
     {
@@ -29,6 +30,7 @@ public class MusicPlayerMenager
         CurrentSongTitle = new ObservableProperty<string>();
         CurrentSongArtist = new ObservableProperty<string>();
         CurrentButtonSign = new ObservableProperty<string>();
+        CurrentSongPlayback = new ObservableProperty<double>();
         CurrentButtonSign.Value = "▶";
     }
 
@@ -89,5 +91,18 @@ public class MusicPlayerMenager
             }
         }
         return 0;
+    }
+
+    public static void checkIfSongEnded(object sender, EventArgs e)
+    {
+        if (Player.GetSongPlaybackPercentage() >= 1)
+        {
+            SkipForward();
+        }
+    }
+
+    public static void GetSongPlayback(object sender, EventArgs e)
+    {
+        CurrentSongPlayback.Value = 100 * Player.GetSongPlaybackPercentage();
     }
 }
