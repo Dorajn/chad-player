@@ -41,7 +41,7 @@ public class LeafNode
                 new MusicFile
                 {
                     FilePath = filePath,
-                    Title = audioFile.Name,
+                    Title = ShortenTitle(audioFile.Name),
                     Playlist = PlaylistName,
                     Duration = AudioPlayerNAudio.GetTotalSongTime(filePath),
                     Artist = AudioPlayerNAudio.GetSongArtist(filePath),
@@ -50,5 +50,17 @@ public class LeafNode
             
         }
         OnPlaylistSetEvent(PlaylistName);
+    }
+    
+    private string ShortenTitle(string text)
+    {
+        const int SIZE = 30;
+        if (text.Length <= SIZE)
+            return text;
+        else
+        {
+            string beg = text.Substring(0, SIZE - 3);
+            return beg + "...";
+        }
     }
 }

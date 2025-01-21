@@ -39,7 +39,7 @@ public class MusicPlayerMenager
         Player.Stop();
         MusicFile song = MusicFilesList[ind];
 
-        CurrentSongTitle.Value = song.Title;
+        CurrentSongTitle.Value = ShortenTitle(song.Title);
         CurrentSongArtist.Value = song.Artist;
         CurrentButtonSign.Value = "❚❚";
         CurrentSongIndex = ind;
@@ -104,5 +104,17 @@ public class MusicPlayerMenager
     public static void GetSongPlayback(object sender, EventArgs e)
     {
         CurrentSongPlayback.Value = 100 * Player.GetSongPlaybackPercentage();
+    }
+    
+    private static string ShortenTitle(string text)
+    {
+        const int SIZE = 18;
+        if (text.Length <= SIZE)
+            return text;
+        else
+        {
+            string beg = text.Substring(0, SIZE - 3);
+            return beg + "...";
+        }
     }
 }
