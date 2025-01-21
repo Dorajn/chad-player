@@ -18,6 +18,8 @@ public class MusicPlayerMenager
     public static ICommand PauseResumeCommand { get; set; } = new RelayCommand(_ => PauseResume());
     public static ObservableCollection<MusicFile> MusicFilesList { get; set; }
     public static ObservableProperty<string> CurrentSongTitle { get; set; }
+    
+    public static ObservableProperty<string> CurrentSongLyrics { get; set; }
     public static ObservableProperty<string> CurrentSongArtist { get; set; }
     private static bool isPlaying { get; set; } = false;
     public static ObservableProperty<string> CurrentButtonSign { get; set; }
@@ -29,16 +31,19 @@ public class MusicPlayerMenager
         MusicFilesList = new ObservableCollection<MusicFile>();
         CurrentSongTitle = new ObservableProperty<string>();
         CurrentSongArtist = new ObservableProperty<string>();
+        CurrentSongLyrics = new ObservableProperty<string>();
         CurrentButtonSign = new ObservableProperty<string>();
         CurrentSongPlayback = new ObservableProperty<double>();
         CurrentButtonSign.Value = "▶";
+        CurrentSongLyrics.Value = "                    No lyrics added";
     }
 
     private static void PlayMusic(int ind)
     {
         Player.Stop();
         MusicFile song = MusicFilesList[ind];
-
+        
+        CurrentSongLyrics.Value = FetchLyrics(song);
         CurrentSongTitle.Value = ShortenTitle(song.Title);
         CurrentSongArtist.Value = song.Artist;
         CurrentButtonSign.Value = "❚❚";
@@ -47,10 +52,24 @@ public class MusicPlayerMenager
         Player.Play(song.FilePath);
     }
 
+    private static string FetchLyrics(MusicFile song)
+    {
+        string lyrics = Data.FetchLyrics(song);
+        
+        if (String.IsNullOrEmpty(lyrics))
+        {
+            return "                    " +
+                   "No lyrics added";
+        }
+        
+        return lyrics + "\n";
+    }
+
     private static void AddLyrics(int ind)
     {
         MusicFile song = MusicFilesList[ind];
-        Data.CreateAndOpenFile(song);
+        Data.CreateAndOpenLyricsFile(song);
+        CurrentSongLyrics.Value = FetchLyrics(song);
     }
 
     private static void SkipForward()

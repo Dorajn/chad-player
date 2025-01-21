@@ -91,13 +91,19 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
+            
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" /> 
+                <ColumnDefinition Width="0" x:Name="SidePanelColumn" />
+            </Grid.ColumnDefinitions>
 
-            <StackPanel Orientation="Horizontal" Background="#1E1E1E" Height="50" VerticalAlignment="Top">
+
+            <StackPanel  Orientation="Horizontal" Background="#1E1E1E" Height="50" VerticalAlignment="Top">
                 <TextBlock Text="Music Files" FontSize="20" Foreground="White" FontWeight="Bold" Margin="0,10"/>
             </StackPanel>
 
             <!-- Content Area -->
-            <ScrollViewer Grid.Row="1" Background="#121212">
+            <ScrollViewer Grid.Row="1" Background="#121212" VerticalScrollBarVisibility="Auto">
                 <StackPanel Margin="20" Drop="ImagePanel_Drop" AllowDrop="true" Name="ImagePanel">
 
                     <!-- Scrollable List of Music Files -->
@@ -146,6 +152,17 @@
                     </ListView>
                 </StackPanel>
             </ScrollViewer>
+            
+            <StackPanel Grid.Column="1" Grid.Row="0"  Orientation="Horizontal" Background="#1D1D1D" Height="50" VerticalAlignment="Top">
+                <TextBlock Text="Lyrics" FontSize="22" Foreground="White" FontWeight="Bold" Margin="130, 10"/>
+            </StackPanel>
+            
+            <Grid Grid.Column="1" Grid.Row="1" Background="#1D1D1D">
+                <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Margin="10">
+                    <TextBlock TextWrapping="Wrap" Foreground="White" FontSize="16" Text="{Binding MusicPlayerMenager.CurrentSongLyrics.Value}">
+                    </TextBlock>
+                </ScrollViewer>
+            </Grid>
         </Grid>
 
         <!-- Footer -->
@@ -155,6 +172,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="200"/>
                 <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="50"/>
                 <ColumnDefinition Width="200"/>
             </Grid.ColumnDefinitions>
 
@@ -193,7 +211,7 @@
             </StackPanel>
 
             <!-- Right (Volume Control) -->
-            <StackPanel Grid.Column="2"
+            <StackPanel Grid.Column="3"
                         Orientation="Horizontal"
                         VerticalAlignment="Center"
                         Margin="10">
@@ -207,6 +225,14 @@
                         VerticalAlignment="Center"
                         Name="slVolume"
                         ValueChanged="VolumeSlider_ValueChanged"/>
+            </StackPanel>
+            
+            <StackPanel Grid.Column="2"
+                        Orientation="Horizontal"
+                        VerticalAlignment="Center"
+                        Margin="10,10,10,10">
+                <Button Content="🎤" Width="30" Height="30" Foreground="White" Background="Transparent" BorderBrush="Transparent" 
+                        Click="ToggleSidePanel_Click" />
             </StackPanel>
         </Grid>
 
