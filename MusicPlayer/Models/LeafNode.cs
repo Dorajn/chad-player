@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Drawing;
 using System.Windows.Input;
 using MusicPlayer.Utils;
 
@@ -7,36 +8,47 @@ namespace MusicPlayer.Model;
 public class LeafNode
 {
     public string PlaylistName { get; set; }
-    public List<AudioFile> AudioFiles { get; set; }
     public ICommand ButtonCommand { get; set; }
+    public delegate void PlaylistSetter(string playlistName);
+    public event PlaylistSetter PlaylistSetEvent;
 
-    public LeafNode(
-        string playlistName,
-        List<AudioFile> audioFile,
-        ObservableCollection<MusicFile> musicFilesList
-    )
+    public void OnPlaylistSetEvent(string playlistName)
     {
-        PlaylistName = playlistName;
-        AudioFiles = new List<AudioFile>(audioFile);
-        ButtonCommand = new RelayCommand(param => ExecuteCommand(musicFilesList));
+        PlaylistSetEvent?.Invoke(playlistName);
+    }
+
+    public LeafNode(Playlist playlist, ObservableCollection<MusicFile> musicFilesList)
+    {
+        PlaylistName = playlist.Name;
+        ButtonCommand = new RelayCommand(_ => ExecuteCommand(musicFilesList));
     }
 
     private void ExecuteCommand(ObservableCollection<MusicFile> musicFilesList)
     {
         musicFilesList.Clear();
-        foreach (var audioFile in AudioFiles)
+
+        foreach (var audioFile in Data.FetchAudioFiles(Metadata.absolutePath + "\\" + PlaylistName))
         {
-            MusicFile mf = new MusicFile();
-            mf.FilePath =
+            string filePath =
                 Metadata.absolutePath
                 + "\\"
                 + PlaylistName
                 + "\\"
                 + audioFile.Name
-                + audioFile.Format;
-            mf.Title = audioFile.Name;
-            mf.Playlist = PlaylistName;
-            musicFilesList.Add(mf);
+                + audioFile.Extension;
+
+            musicFilesList.Add(
+                new MusicFile
+                {
+                    FilePath = filePath,
+                    Title = audioFile.Name,
+                    Playlist = PlaylistName,
+                    Duration = AudioPlayerNAudio.GetTotalSongTime(filePath),
+                    Artist = AudioPlayerNAudio.GetSongArtist(filePath),
+                }
+            );
+            
         }
+        OnPlaylistSetEvent(PlaylistName);
     }
 }

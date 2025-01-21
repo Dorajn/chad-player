@@ -12,13 +12,12 @@ public class MainViewModel
 {
     public ObservableCollection<LeafNode> LeafNodes { get; set; }
     public MusicPlayerMenager MusicPlayerMenager { get; set; }
-    public Data Data { get; set; }
 
     private DispatcherTimer _timer;
+    public string CurrentPlaylist;
 
     public MainViewModel()
     {
-        Data = new Data(Metadata.absolutePath);
         LeafNodes = new ObservableCollection<LeafNode>();
         MusicPlayerMenager = new MusicPlayerMenager();
 
@@ -43,18 +42,30 @@ public class MainViewModel
 
     private void GatherPaths()
     {
-        foreach (var playlist in Data.Playlists)
+        foreach (var playlist in Data.FetchPlaylists(Metadata.absolutePath))
         {
-            LeafNodes.Add(new LeafNode(playlist.Name, playlist.AudioFiles, MusicPlayerMenager.MusicFilesList));
+            LeafNodes.Add(new LeafNode(playlist, MusicPlayerMenager.MusicFilesList));
+        }
+
+        foreach (var leafNode in LeafNodes)
+        {
+            leafNode.PlaylistSetEvent += PlaylistNameSet;
         }
     }
 
-
-    public void VolumeSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e, float slVolume)
+    public void VolumeSlider_ValueChanged(
+        object sender,
+        RoutedPropertyChangedEventArgs<double> e,
+        float slVolume
+    )
     {
         float newVolume = slVolume / 100;
         Console.WriteLine(newVolume);
         MusicPlayerMenager.Player.Volume(newVolume);
     }
 
+    public void PlaylistNameSet(string playlistName)
+    {
+        CurrentPlaylist = playlistName;
+    }
 }

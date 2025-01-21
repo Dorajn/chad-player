@@ -1,4 +1,5 @@
 using System.Windows;
+using MusicPlayer.Services;
 using System.Windows.Controls;
 using System.Windows.Media;
 using MusicPlayer.ViewModels;
@@ -8,6 +9,7 @@ namespace MusicPlayer;
 public partial class MainWindow : Window
 {
     public MainViewModel mainViewModel { get; set; }
+
     public MainWindow()
     {
         mainViewModel = new MainViewModel();
@@ -20,6 +22,13 @@ public partial class MainWindow : Window
         mainViewModel.VolumeSlider_ValueChanged(sender, e, (float)slVolume.Value);
     }
 
+
+    private void ImagePanel_Drop(object sender, DragEventArgs e)
+    {
+        if (e.Data.GetDataPresent(DataFormats.FileDrop))
+        {
+            string[] audioFilePaths = (string[])e.Data.GetData(DataFormats.FileDrop);
+            Data.AddAudioFiles(mainViewModel.CurrentPlaylist, audioFilePaths);
 
     private void Button_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
     {
