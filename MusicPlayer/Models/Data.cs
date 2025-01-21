@@ -14,40 +14,42 @@ public class AudioFile
 public class Playlist
 {
     public string Name { get; internal set; }
-    public List<AudioFile> AudioFiles { get; internal set; } = [];
 }
 
 public class Data
 {
-    private string[] _extensions = { ".mp3", ".wav", ".aiff" };
-    public List<Playlist> Playlists { get; private set; } = [];
+    private static readonly string[] _extensions = [".mp3", ".wav", ".aiff"];
 
-    public Data(string directoryPath)
+    public static List<Playlist> FetchPlaylists(string rootDirectoryPath)
     {
-        string[] playlistPaths = Directory.GetDirectories(directoryPath);
-        foreach (string playlistPath in playlistPaths)
-        {
-            DirectoryInfo playlistInfo = new DirectoryInfo(playlistPath);
-            List<AudioFile> audioFiles = playlistInfo
-                .GetFiles()
-                .Where(file =>
-                    _extensions.Any(extension => Path.GetExtension(file.Name) == extension)
-                )
-                .Select(file => new AudioFile
-                {
-                    Name = Path.GetFileNameWithoutExtension(file.Name),
-                    Extension = Path.GetExtension(file.Name),
-                })
-                .ToList();
-            Playlist playlist = new Playlist { Name = playlistInfo.Name, AudioFiles = audioFiles };
-            Playlists.Add(playlist);
-        }
+        return
+        [
+            .. Directory
+                .GetDirectories(rootDirectoryPath)
+                .Select(playlist => new Playlist { Name = Path.GetFileName(playlist) }),
+        ];
     }
 
-    public void AddAudioFiles(string playlistName, string[] audioFilePaths)
+    public static List<AudioFile> FetchAudioFiles(string palylistPath)
+    {
+        return
+        [
+            .. Directory
+                .GetFiles(palylistPath)
+                .Where(audioFileName =>
+                    _extensions.Any(extension => Path.GetExtension(audioFileName) == extension)
+                )
+                .Select(audioFileName => new AudioFile
+                {
+                    Name = Path.GetFileNameWithoutExtension(audioFileName),
+                    Extension = Path.GetExtension(audioFileName),
+                }),
+        ];
+    }
+
+    public static void AddAudioFiles(string playlistName, string[] audioFilePaths)
     {
         string destinationPlaylist = Metadata.absolutePath + "\\" + playlistName;
-        var playlist = Playlists.Find(playlist => playlist.Name == playlistName);
         foreach (var audioFile in audioFilePaths)
         {
             string audioFileExtension = Path.GetExtension(audioFile);
@@ -67,14 +69,10 @@ public class Data
             }
 
             File.Copy(audioFile, destinationAudioFile);
-
-            playlist.AudioFiles.Add(
-                new AudioFile { Name = audioFileName, Extension = audioFileExtension }
-            );
         }
     }
 
-    public static string? GetLyrics(MusicFile song)
+    public static string? FetchLyrics(MusicFile song)
     {
         string filePath = Metadata.absolutePath + "\\" + song.Playlist + "\\" + song.Title + ".txt";
 
@@ -97,18 +95,5 @@ public class Data
         }
 
         Process.Start("notepad.exe", filePath);
-    }
-
-    // For debuging
-    public void Print()
-    {
-        foreach (var playlist in Playlists)
-        {
-            Console.WriteLine(playlist.Name);
-            foreach (var audioFile in playlist.AudioFiles)
-            {
-                Console.WriteLine("-- " + audioFile.Name);
-            }
-        }
     }
 }

@@ -12,13 +12,11 @@ public class MainViewModel
 {
     public ObservableCollection<LeafNode> LeafNodes { get; set; }
     public MusicPlayerMenager MusicPlayerMenager { get; set; }
-    public Data Data { get; set; }
 
     private DispatcherTimer _timer;
 
     public MainViewModel()
     {
-        Data = new Data(Metadata.absolutePath);
         LeafNodes = new ObservableCollection<LeafNode>();
         MusicPlayerMenager = new MusicPlayerMenager();
 
@@ -41,11 +39,9 @@ public class MainViewModel
 
     private void GatherPaths()
     {
-        foreach (var playlist in Data.Playlists)
+        foreach (var playlist in Data.FetchPlaylists(Metadata.absolutePath))
         {
-            LeafNodes.Add(
-                new LeafNode(playlist.Name, playlist.AudioFiles, MusicPlayerMenager.MusicFilesList)
-            );
+            LeafNodes.Add(new LeafNode(playlist, MusicPlayerMenager.MusicFilesList));
         }
     }
 

@@ -7,24 +7,18 @@ namespace MusicPlayer.Model;
 public class LeafNode
 {
     public string PlaylistName { get; set; }
-    public List<AudioFile> AudioFiles { get; set; }
     public ICommand ButtonCommand { get; set; }
 
-    public LeafNode(
-        string playlistName,
-        List<AudioFile> audioFile,
-        ObservableCollection<MusicFile> musicFilesList
-    )
+    public LeafNode(Playlist playlist, ObservableCollection<MusicFile> musicFilesList)
     {
-        PlaylistName = playlistName;
-        AudioFiles = audioFile;
+        PlaylistName = playlist.Name;
         ButtonCommand = new RelayCommand(_ => ExecuteCommand(musicFilesList));
     }
 
     private void ExecuteCommand(ObservableCollection<MusicFile> musicFilesList)
     {
         musicFilesList.Clear();
-        foreach (var audioFile in AudioFiles)
+        foreach (var audioFile in Data.FetchAudioFiles(Metadata.absolutePath + "\\" + PlaylistName))
         {
             MusicFile mf = new MusicFile();
             mf.FilePath =
@@ -36,6 +30,8 @@ public class LeafNode
                 + audioFile.Extension;
             mf.Title = audioFile.Name;
             mf.Playlist = PlaylistName;
+            mf.Duration = AudioPlayerNAudio.GetTotalSongTime(mf.FilePath);
+            mf.Artist = AudioPlayerNAudio.GetSongArtist(mf.FilePath);
             musicFilesList.Add(mf);
         }
     }

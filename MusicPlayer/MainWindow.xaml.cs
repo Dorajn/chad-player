@@ -1,4 +1,5 @@
 using System.Windows;
+using MusicPlayer.Services;
 using MusicPlayer.ViewModels;
 
 namespace MusicPlayer;
@@ -24,7 +25,7 @@ public partial class MainWindow : Window
         if (e.Data.GetDataPresent(DataFormats.FileDrop))
         {
             string[] audioFilePaths = (string[])e.Data.GetData(DataFormats.FileDrop);
-            mainViewModel.Data.AddAudioFiles("Nightcore", audioFilePaths);
+            Data.AddAudioFiles(MusicPlayerMenager.MusicFilesList[0].Playlist, audioFilePaths);
         }
     }
 }

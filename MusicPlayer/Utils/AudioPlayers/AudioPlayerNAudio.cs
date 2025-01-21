@@ -99,13 +99,20 @@ public class AudioPlayerNAudio : IDisposable, IAudioPlayer
         }
     }
 
-    public string GetTotalSongTime(string filePath)
+    public static string GetTotalSongTime(string filePath)
     {
         using (var audioFile = new AudioFileReader(filePath))
         {
             TimeSpan duration = audioFile.TotalTime;
             return duration.ToString(@"mm\:ss");
         }
+    }
+
+    public static string GetSongArtist(string filePath)
+    {
+        var file = File.Create(filePath);
+        string artist = file.Tag.Performers.Length > 0 ? file.Tag.Performers[0] : "Unknown artist";
+        return artist;
     }
 
     public double GetSongPlaybackPercentage()
@@ -118,12 +125,5 @@ public class AudioPlayerNAudio : IDisposable, IAudioPlayer
         double percentage =
             _audioFileReader.CurrentTime.TotalSeconds / _audioFileReader.TotalTime.TotalSeconds;
         return percentage;
-    }
-
-    public string GetSongArtist(string filePath)
-    {
-        var file = File.Create(filePath);
-        string artist = file.Tag.Performers.Length > 0 ? file.Tag.Performers[0] : "Unknown artist";
-        return artist;
     }
 }
