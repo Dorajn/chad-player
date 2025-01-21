@@ -47,6 +47,18 @@ public class Data
         ];
     }
 
+    public static string? FetchLyrics(MusicFile song)
+    {
+        string filePath = Metadata.absolutePath + "\\" + song.Playlist + "\\" + song.Title + ".txt";
+
+        if (!File.Exists(filePath))
+        {
+            return null;
+        }
+
+        return File.ReadAllText(filePath);
+    }
+
     public static void AddAudioFiles(string playlistName, string[] audioFilePaths)
     {
         string destinationPlaylist = Metadata.absolutePath + "\\" + playlistName;
@@ -70,18 +82,6 @@ public class Data
 
             File.Copy(audioFile, destinationAudioFile);
         }
-    }
-
-    public static string? FetchLyrics(MusicFile song)
-    {
-        string filePath = Metadata.absolutePath + "\\" + song.Playlist + "\\" + song.Title + ".txt";
-
-        if (!File.Exists(filePath))
-        {
-            return null;
-        }
-
-        return File.ReadAllText(filePath);
     }
 
     public static void CreateAndOpenFile(MusicFile song)

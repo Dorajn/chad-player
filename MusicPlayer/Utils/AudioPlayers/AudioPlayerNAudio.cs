@@ -31,7 +31,7 @@ public class AudioPlayerNAudio : IDisposable, IAudioPlayer
         }
         catch (Exception ex)
         {
-            Console.WriteLine("Error while playing audio. \n" + ex.ToString());
+            Console.WriteLine("Error while playing audio.\n" + ex.ToString());
             throw;
         }
     }

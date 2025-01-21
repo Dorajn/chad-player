@@ -37,9 +37,6 @@ public class MusicPlayerMenager
         Player.Stop();
         MusicFile song = MusicFilesList[ind];
 
-        Console.WriteLine(Data.FetchLyrics(song));
-        // Data.CreateAndOpenFile(song);
-
         CurrentSongTitle.Value = song.Title;
         CurrentSongArtist.Value = song.Artist;
         CurrentButtonSign.Value = "❚❚";

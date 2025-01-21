@@ -18,21 +18,29 @@ public class LeafNode
     private void ExecuteCommand(ObservableCollection<MusicFile> musicFilesList)
     {
         musicFilesList.Clear();
+
+        musicFilesList.Add(new MusicFile { Playlist = PlaylistName });
+
         foreach (var audioFile in Data.FetchAudioFiles(Metadata.absolutePath + "\\" + PlaylistName))
         {
-            MusicFile mf = new MusicFile();
-            mf.FilePath =
+            string filePath =
                 Metadata.absolutePath
                 + "\\"
                 + PlaylistName
                 + "\\"
                 + audioFile.Name
                 + audioFile.Extension;
-            mf.Title = audioFile.Name;
-            mf.Playlist = PlaylistName;
-            mf.Duration = AudioPlayerNAudio.GetTotalSongTime(mf.FilePath);
-            mf.Artist = AudioPlayerNAudio.GetSongArtist(mf.FilePath);
-            musicFilesList.Add(mf);
+
+            musicFilesList.Add(
+                new MusicFile
+                {
+                    FilePath = filePath,
+                    Title = audioFile.Name,
+                    Playlist = PlaylistName,
+                    Duration = AudioPlayerNAudio.GetTotalSongTime(filePath),
+                    Artist = AudioPlayerNAudio.GetSongArtist(filePath),
+                }
+            );
         }
     }
 }

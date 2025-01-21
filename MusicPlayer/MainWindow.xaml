@@ -13,7 +13,7 @@
         Background="#121212">
     <Window.Resources>
         <Style x:Key="NavButtonStyle"
-                TargetType="Button">
+               TargetType="Button">
             <Setter Property="Foreground"
                     Value="White"/>
             <Setter Property="Background"
@@ -30,7 +30,7 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
                         <ContentPresenter HorizontalAlignment="Left"
-                                VerticalAlignment="Center"/>
+                                          VerticalAlignment="Center"/>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
@@ -39,15 +39,15 @@
     <Grid>
         <!-- Sidebar -->
         <Grid Width="250"
-                Background="#1D1D1D"
-                HorizontalAlignment="Left">
+              Background="#1D1D1D"
+              HorizontalAlignment="Left">
             <StackPanel Margin="10">
                 <!-- App Title -->
                 <TextBlock Text="MusicApp"
-                        FontSize="24"
-                        Foreground="White"
-                        FontWeight="Bold"
-                        Margin="10"/>
+                           FontSize="24"
+                           Foreground="White"
+                           FontWeight="Bold"
+                           Margin="10"/>
 
                 <!-- Navigation Buttons -->
                 <Button Content="Your Library"
@@ -56,9 +56,9 @@
 
                 <!-- TreeView for Folder Structure -->
                 <TreeView ItemsSource="{Binding LeafNodes}"
-                        Background="#1D1D1D"
-                        Foreground="White"
-                        BorderThickness="0">
+                          Background="#1D1D1D"
+                          Foreground="White"
+                          BorderThickness="0">
                     <TreeView.ItemTemplate>
                         <DataTemplate>
                             <Button Content="{Binding PlaylistName}"
@@ -91,9 +91,9 @@
 
             <!-- Top Bar -->
             <StackPanel Orientation="Horizontal"
-                    Background="#1E1E1E"
-                    Height="50"
-                    VerticalAlignment="Top">
+                        Background="#1E1E1E"
+                        Height="50"
+                        VerticalAlignment="Top">
                 <Button Content="⟵"
                         Width="40"
                         Height="40"
@@ -110,43 +110,43 @@
 
             <!-- Content Area -->
             <ScrollViewer Grid.Row="1"
-                    Background="#121212">
+                          Background="#121212">
                 <StackPanel Name="ImagePanel"
-                        Drop="ImagePanel_Drop"
-                        AllowDrop="true"
-                        Margin="20">
+                            Drop="ImagePanel_Drop"
+                            AllowDrop="true"
+                            Margin="20">
                     <TextBlock Text="Music Files"
-                            FontSize="20"
-                            Foreground="White"
-                            FontWeight="Bold"
-                            Margin="0,10"/>
+                               FontSize="20"
+                               Foreground="White"
+                               FontWeight="Bold"
+                               Margin="0,10"/>
 
                     <!-- Scrollable List of Music Files -->
-                    <ListView ItemsSource="{Binding MusicPlayerMenager.MusicFilesList}"
-                            Background="#121212"
-                            BorderBrush="Transparent"
-                            Foreground="White"
-                            Height="400">
+                    <ListView ItemsSource="{Binding MusicPlayerMenager.FilteredMusicFilesList}"
+                              Background="#121212"
+                              BorderBrush="Transparent"
+                              Foreground="White"
+                              Height="400">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal"
-                                        Margin="5">
+                                            Margin="5">
                                     <!-- Music File Details -->
                                     <TextBlock Text="{Binding Title}"
-                                            Width="200"
-                                            Foreground="White"
-                                            VerticalAlignment="Center"
-                                            Margin="5,0"/>
+                                               Width="200"
+                                               Foreground="White"
+                                               VerticalAlignment="Center"
+                                               Margin="5,0"/>
                                     <TextBlock Text="{Binding Artist}"
-                                            Width="150"
-                                            Foreground="White"
-                                            VerticalAlignment="Center"
-                                            Margin="5,0"/>
+                                               Width="150"
+                                               Foreground="White"
+                                               VerticalAlignment="Center"
+                                               Margin="5,0"/>
                                     <TextBlock Text="{Binding Duration}"
-                                            Width="100"
-                                            Foreground="White"
-                                            VerticalAlignment="Center"
-                                            Margin="5,0"/>
+                                               Width="100"
+                                               Foreground="White"
+                                               VerticalAlignment="Center"
+                                               Margin="5,0"/>
 
                                     <!-- Play Button -->
                                     <Button Content="Play"
@@ -179,8 +179,8 @@
 
         <!-- Footer -->
         <Grid Height="50"
-                VerticalAlignment="Bottom"
-                Background="#1D1D1D">
+              VerticalAlignment="Bottom"
+              Background="#1D1D1D">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="200"/>
                 <ColumnDefinition Width="*"/>
@@ -189,30 +189,30 @@
 
             <!-- Left (Currently Playing) -->
             <StackPanel Grid.Column="0"
-                    Orientation="Horizontal"
-                    VerticalAlignment="Center"
-                    Margin="10">
+                        Orientation="Horizontal"
+                        VerticalAlignment="Center"
+                        Margin="10">
                 <Image Source="cover_placeholder.png"
-                        Width="40"
-                        Height="40"
-                        Margin="0,0,10,0"/>
+                       Width="40"
+                       Height="40"
+                       Margin="0,0,10,0"/>
                 <StackPanel>
                     <TextBlock Text="{Binding MusicPlayerMenager.CurrentSongTitle.Value}"
-                            Foreground="White"
-                            FontSize="14"
-                            FontWeight="Bold"/>
+                               Foreground="White"
+                               FontSize="14"
+                               FontWeight="Bold"/>
                     <TextBlock Text="{Binding MusicPlayerMenager.CurrentSongArtist.Value}"
-                            Foreground="#B3B3B3"
-                            FontSize="12"/>
+                               Foreground="#B3B3B3"
+                               FontSize="12"/>
                 </StackPanel>
             </StackPanel>
 
             <!-- Center (Playback Controls) -->
             <StackPanel Grid.Column="1"
-                    Orientation="Horizontal"
-                    VerticalAlignment="Center"
-                    HorizontalAlignment="Center"
-                    Margin="10">
+                        Orientation="Horizontal"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                        Margin="10">
                 <Button Content="⏮"
                         Width="40"
                         Height="40"
@@ -239,12 +239,12 @@
 
             <!-- Right (Volume Control) -->
             <StackPanel Grid.Column="2"
-                    Orientation="Horizontal"
-                    VerticalAlignment="Center"
-                    Margin="10">
+                        Orientation="Horizontal"
+                        VerticalAlignment="Center"
+                        Margin="10">
                 <TextBlock Text="🔊"
-                        Foreground="White"
-                        VerticalAlignment="Center"/>
+                           Foreground="White"
+                           VerticalAlignment="Center"/>
                 <Slider Maximum="100"
                         Value="50"
                         Width="100"
