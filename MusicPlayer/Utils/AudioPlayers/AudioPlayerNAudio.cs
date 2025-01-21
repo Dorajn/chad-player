@@ -1,9 +1,8 @@
-﻿using NAudio.Wave;
-using NAudio.Wave.SampleProviders;
-using System.Windows.Media;
-using TagLib;
+﻿using System.Windows.Media;
 using NAudio.Dsp;
-
+using NAudio.Wave;
+using NAudio.Wave.SampleProviders;
+using TagLib;
 
 namespace MusicPlayer.Utils;
 
@@ -32,7 +31,7 @@ public class AudioPlayerNAudio : IDisposable, IAudioPlayer
         }
         catch (Exception ex)
         {
-            Console.WriteLine("Error while playing audio. \n" + ex.ToString());
+            Console.WriteLine("Error while playing audio.\n" + ex.ToString());
             throw;
         }
     }
@@ -86,7 +85,7 @@ public class AudioPlayerNAudio : IDisposable, IAudioPlayer
             ".mp3" => new Mp3FileReader(filePath),
             ".wav" => new WaveFileReader(filePath),
             ".aiff" => new AiffFileReader(filePath),
-            _ => throw new NotSupportedException($"File format {extension} is not supported")
+            _ => throw new NotSupportedException($"File format {extension} is not supported"),
         };
     }
 
@@ -94,13 +93,13 @@ public class AudioPlayerNAudio : IDisposable, IAudioPlayer
     {
         if (volume >= 0 && volume <= 1)
         {
-            if(_volumeProvider != null)
+            if (_volumeProvider != null)
                 _volumeProvider.Volume = volume;
             VolumeLevel = volume;
         }
     }
 
-    public string GetTotalSongTime(string filePath)
+    public static string GetTotalSongTime(string filePath)
     {
         using (var audioFile = new AudioFileReader(filePath))
         {
@@ -108,7 +107,14 @@ public class AudioPlayerNAudio : IDisposable, IAudioPlayer
             return duration.ToString(@"mm\:ss");
         }
     }
-    
+
+    public static string GetSongArtist(string filePath)
+    {
+        var file = File.Create(filePath);
+        string artist = file.Tag.Performers.Length > 0 ? file.Tag.Performers[0] : "Unknown artist";
+        return artist;
+    }
+
     public double GetSongPlaybackPercentage()
     {
         if (_audioFileReader == null || _audioFileReader.TotalTime == TimeSpan.Zero)
@@ -116,15 +122,8 @@ public class AudioPlayerNAudio : IDisposable, IAudioPlayer
             return 0;
         }
 
-        double percentage = _audioFileReader.CurrentTime.TotalSeconds / _audioFileReader.TotalTime.TotalSeconds;
+        double percentage =
+            _audioFileReader.CurrentTime.TotalSeconds / _audioFileReader.TotalTime.TotalSeconds;
         return percentage;
     }
-
-    public string GetSongArtist(string filePath)
-    {
-        var file = File.Create(filePath);
-        string artist = file.Tag.Performers.Length > 0 ? file.Tag.Performers[0] : "Unknown artist";
-        return artist;
-    }
-
 }

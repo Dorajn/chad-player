@@ -11,7 +11,6 @@ public class MusicFile
     public string Duration { get; set; }
     public string FilePath { get; set; }
     public string Playlist { get; set; }
-    
 
     public MusicFile()
     {
@@ -19,6 +18,6 @@ public class MusicFile
         Artist = string.Empty;
         Duration = string.Empty;
         FilePath = string.Empty;
+        Playlist = string.Empty;
     }
-
 }
