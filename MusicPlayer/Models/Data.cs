@@ -84,7 +84,7 @@ public class Data
         }
     }
 
-    public static void CreateAndOpenFile(MusicFile song)
+    public static void CreateAndOpenLyricsFile(MusicFile song)
     {
         string filePath = Metadata.absolutePath + "\\" + song.Playlist + "\\" + song.Title + ".txt";
 

@@ -9,6 +9,7 @@ namespace MusicPlayer;
 public partial class MainWindow : Window
 {
     public MainViewModel mainViewModel { get; set; }
+    private bool isPanelVisible = false;
 
     public MainWindow()
     {
@@ -66,5 +67,19 @@ public partial class MainWindow : Window
         {
             button.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#00e022"));
         }
+    }
+
+    private void ToggleSidePanel_Click(object sender, RoutedEventArgs e)
+    {
+        if (isPanelVisible)
+        {
+            SidePanelColumn.Width = new GridLength(0);
+        }
+        else
+        {
+            SidePanelColumn.Width = new GridLength(350); 
+        }
+
+        isPanelVisible = !isPanelVisible;
     }
 }
