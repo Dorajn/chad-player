@@ -1,6 +1,7 @@
 using System.Windows;
 using MusicPlayer.Services;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using MusicPlayer.ViewModels;
 
@@ -81,5 +82,19 @@ public partial class MainWindow : Window
         }
 
         isPanelVisible = !isPanelVisible;
+    }
+
+    private void ScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+    {
+        var scrollViewer = sender as ScrollViewer;
+        if (scrollViewer != null)
+        {
+            if (e.Delta > 0)
+                scrollViewer.LineUp();
+            else
+                scrollViewer.LineDown();
+            
+            e.Handled = true;
+        }
     }
 }
