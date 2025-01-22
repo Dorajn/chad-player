@@ -14,7 +14,7 @@ public partial class App : Application
 
         //To powinno byc wywylywane tylko RAZ przy instalacji lub RAZ przez was gdy uruchamiacie aplikacje
         //Ta metoda zapisuje sciezke do rejestru systemu
-        Metadata.SaveMusicFolderPath(@"C:\Users\derqu\Music");
+        Metadata.SaveMusicFolderPath(@"C:\Users\nier\Desktop\Music");
 
         Metadata.absolutePath = Metadata.GetMusicFolderPath();
     }
