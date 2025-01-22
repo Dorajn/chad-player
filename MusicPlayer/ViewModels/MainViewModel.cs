@@ -28,7 +28,7 @@ public class MainViewModel
 
     private void SetDispatcher()
     {
-        _timer.Interval = TimeSpan.FromSeconds(1);
+        _timer.Interval = TimeSpan.FromMilliseconds(20);
         _timer.Tick += ShowTrackPercentage;
         _timer.Tick += MusicPlayerMenager.checkIfSongEnded;
         _timer.Tick += MusicPlayerMenager.GetSongPlayback;
