@@ -40,6 +40,22 @@ public class MainViewModel
         Console.WriteLine(MusicPlayerMenager.Player.GetSongPlaybackPercentage());
     }
 
+    public void RefreshCurrentPlaylist()
+    {
+        foreach(var leafNode in LeafNodes)
+        {
+            if(leafNode.PlaylistName == CurrentPlaylist)
+            {
+                leafNode.RefreshMusicList(MusicPlayerMenager.MusicFilesList);
+            }
+        }
+    }
+
+    public void RefreshGatherPaths()
+    {
+        LeafNodes.Clear();
+        GatherPaths();
+    }
     private void GatherPaths()
     {
         foreach (var playlist in Data.FetchPlaylists(Metadata.absolutePath))

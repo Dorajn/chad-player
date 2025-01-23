@@ -62,7 +62,7 @@ public class Data
     public static void AddAudioFiles(string playlistName, string[] audioFilePaths)
     {
         string destinationPlaylist = Metadata.absolutePath + "\\" + playlistName;
-        foreach (var audioFile in audioFilePaths)
+        foreach (string audioFile in audioFilePaths)
         {
             string audioFileExtension = Path.GetExtension(audioFile);
 
@@ -81,6 +81,28 @@ public class Data
             }
 
             File.Copy(audioFile, destinationAudioFile);
+        }
+    }
+
+    public static void AddPlaylists(string[] playlistPaths)
+    {
+        foreach (string playlistPath in playlistPaths)
+        {
+            if (!Directory.Exists(playlistPath))
+            {
+                continue;
+            }
+
+            string palylistName = Path.GetFileName(playlistPath);
+            string destinationPlaylist = Metadata.absolutePath + "\\" + palylistName;
+
+            if (Directory.Exists(destinationPlaylist))
+            {
+                continue;
+            }
+
+            Directory.CreateDirectory(destinationPlaylist);
+            AddAudioFiles(palylistName, Directory.GetFiles(playlistPath));
         }
     }
 

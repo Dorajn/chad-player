@@ -1,8 +1,8 @@
 using System.Windows;
-using MusicPlayer.Services;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using MusicPlayer.Services;
 using MusicPlayer.ViewModels;
 
 namespace MusicPlayer;
@@ -24,14 +24,24 @@ public partial class MainWindow : Window
         mainViewModel.VolumeSlider_ValueChanged(sender, e, (float)slVolume.Value);
     }
 
-
-    private void ImagePanel_Drop(object sender, DragEventArgs e)
+    private void AudioFiles_Drop(object sender, DragEventArgs e)
     {
         if (e.Data.GetDataPresent(DataFormats.FileDrop))
         {
             string[] audioFilePaths = (string[])e.Data.GetData(DataFormats.FileDrop);
             Data.AddAudioFiles(mainViewModel.CurrentPlaylist, audioFilePaths);
         }
+        mainViewModel.RefreshCurrentPlaylist();
+    }
+
+    private void Playlists_Drop(object sender, DragEventArgs e)
+    {
+        if (e.Data.GetDataPresent(DataFormats.FileDrop))
+        {
+            string[] playlistPaths = (string[])e.Data.GetData(DataFormats.FileDrop);
+            Data.AddPlaylists(playlistPaths);
+        }
+        mainViewModel.RefreshGatherPaths();
     }
 
     private void Button_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
@@ -39,7 +49,9 @@ public partial class MainWindow : Window
         Button button = sender as Button;
         if (button != null)
         {
-            button.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#3d3d3d"));
+            button.Background = new SolidColorBrush(
+                (Color)ColorConverter.ConvertFromString("#3d3d3d")
+            );
         }
     }
 
@@ -48,7 +60,9 @@ public partial class MainWindow : Window
         Button button = sender as Button;
         if (button != null)
         {
-            button.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#1d1d1d"));
+            button.Background = new SolidColorBrush(
+                (Color)ColorConverter.ConvertFromString("#1d1d1d")
+            );
         }
     }
 
@@ -57,7 +71,9 @@ public partial class MainWindow : Window
         Button button = sender as Button;
         if (button != null)
         {
-            button.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#007a13"));
+            button.Background = new SolidColorBrush(
+                (Color)ColorConverter.ConvertFromString("#007a13")
+            );
         }
     }
 
@@ -66,7 +82,9 @@ public partial class MainWindow : Window
         Button button = sender as Button;
         if (button != null)
         {
-            button.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#00e022"));
+            button.Background = new SolidColorBrush(
+                (Color)ColorConverter.ConvertFromString("#00e022")
+            );
         }
     }
 
@@ -75,10 +93,12 @@ public partial class MainWindow : Window
         if (isPanelVisible)
         {
             SidePanelColumn.Width = new GridLength(0);
+            this.Width = this.Width - 350;
         }
         else
         {
-            SidePanelColumn.Width = new GridLength(350); 
+            SidePanelColumn.Width = new GridLength(350);
+            this.Width = this.Width + 350;
         }
 
         isPanelVisible = !isPanelVisible;
@@ -93,7 +113,7 @@ public partial class MainWindow : Window
                 scrollViewer.LineUp();
             else
                 scrollViewer.LineDown();
-            
+
             e.Handled = true;
         }
     }

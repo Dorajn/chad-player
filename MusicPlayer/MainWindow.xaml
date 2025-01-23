@@ -40,7 +40,8 @@
         <!-- Sidebar -->
         <Grid Width="250"
               Background="#1D1D1D"
-              HorizontalAlignment="Left">
+              HorizontalAlignment="Left"
+              Drop="Playlists_Drop" AllowDrop="true" Name="Playlists">
             
             <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Hidden" Margin="10" PreviewMouseWheel="ScrollViewer_PreviewMouseWheel">
                 <StackPanel Margin="10">
@@ -107,7 +108,7 @@
 
             <!-- Content Area -->
             <ScrollViewer Grid.Row="1" Background="#121212" VerticalScrollBarVisibility="Auto">
-                <StackPanel Margin="20" Drop="ImagePanel_Drop" AllowDrop="true" Name="ImagePanel">
+                <StackPanel Margin="20" Drop="AudioFiles_Drop" AllowDrop="true" Name="AudioFiles">
 
                     <!-- Scrollable List of Music Files -->
                     <ListView ItemsSource="{Binding MusicPlayerMenager.MusicFilesList}" Background="#121212" BorderBrush="Transparent" Foreground="White" Height="400" HorizontalAlignment="Stretch">
