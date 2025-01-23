@@ -93,10 +93,12 @@ public partial class MainWindow : Window
         if (isPanelVisible)
         {
             SidePanelColumn.Width = new GridLength(0);
+            this.Width = this.Width - 350;
         }
         else
         {
             SidePanelColumn.Width = new GridLength(350);
+            this.Width = this.Width + 350;
         }
 
         isPanelVisible = !isPanelVisible;
