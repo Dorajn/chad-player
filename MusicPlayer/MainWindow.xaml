@@ -40,10 +40,11 @@
         <!-- Sidebar -->
         <Grid Width="250"
               Background="#1D1D1D"
-              HorizontalAlignment="Left">
+              HorizontalAlignment="Left"
+              Drop="Playlists_Drop" AllowDrop="true" Name="Playlists">
             
             <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Hidden" Margin="10" PreviewMouseWheel="ScrollViewer_PreviewMouseWheel">
-                <StackPanel Margin="10" Drop="Playlists_Drop" AllowDrop="true" Name="Playlists">
+                <StackPanel Margin="10">
                     <!-- App Title -->
                     <TextBlock Text="Your library"
                                FontSize="24"
