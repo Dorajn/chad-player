@@ -31,6 +31,7 @@ public partial class MainWindow : Window
             string[] audioFilePaths = (string[])e.Data.GetData(DataFormats.FileDrop);
             Data.AddAudioFiles(mainViewModel.CurrentPlaylist, audioFilePaths);
         }
+        mainViewModel.RefreshCurrentPlaylist();
     }
 
     private void Playlists_Drop(object sender, DragEventArgs e)
@@ -40,6 +41,7 @@ public partial class MainWindow : Window
             string[] playlistPaths = (string[])e.Data.GetData(DataFormats.FileDrop);
             Data.AddPlaylists(playlistPaths);
         }
+        mainViewModel.RefreshGatherPaths();
     }
 
     private void Button_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)

@@ -23,6 +23,11 @@ public class LeafNode
         ButtonCommand = new RelayCommand(_ => ExecuteCommand(musicFilesList));
     }
 
+    public void RefreshMusicList(ObservableCollection<MusicFile> musicFilesList)
+    {
+        ExecuteCommand(musicFilesList);
+    }
+
     private void ExecuteCommand(ObservableCollection<MusicFile> musicFilesList)
     {
         musicFilesList.Clear();
