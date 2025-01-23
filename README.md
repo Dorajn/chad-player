@@ -1,4 +1,4 @@
-# Chad Player (CP)
+# Chad Player
 
 # Opis
 
