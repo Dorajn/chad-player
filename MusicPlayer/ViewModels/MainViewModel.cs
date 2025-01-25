@@ -29,16 +29,11 @@ public class MainViewModel
     private void SetDispatcher()
     {
         _timer.Interval = TimeSpan.FromMilliseconds(20);
-        _timer.Tick += ShowTrackPercentage;
         _timer.Tick += MusicPlayerMenager.checkIfSongEnded;
         _timer.Tick += MusicPlayerMenager.GetSongPlayback;
         _timer.Start();
     }
-
-    private void ShowTrackPercentage(object sender, EventArgs e)
-    {
-        Console.WriteLine(MusicPlayerMenager.Player.GetSongPlaybackPercentage());
-    }
+    
 
     public void RefreshCurrentPlaylist()
     {
@@ -76,7 +71,6 @@ public class MainViewModel
     )
     {
         float newVolume = slVolume / 100;
-        Console.WriteLine(newVolume);
         MusicPlayerMenager.Player.Volume(newVolume);
     }
 

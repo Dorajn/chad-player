@@ -11,11 +11,10 @@ public partial class App : Application
     protected override void OnStartup(StartupEventArgs e)
     {
         base.OnStartup(e);
-
-        //To powinno byc wywylywane tylko RAZ przy instalacji lub RAZ przez was gdy uruchamiacie aplikacje
-        //Ta metoda zapisuje sciezke do rejestru systemu
-        Metadata.SaveMusicFolderPath();
-
+        
+        string musicFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.MyMusic);
+        
+        Metadata.SaveMusicFolderPath(musicFolderPath);
         Metadata.absolutePath = Metadata.GetMusicFolderPath();
     }
 }

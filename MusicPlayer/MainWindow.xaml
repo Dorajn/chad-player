@@ -111,7 +111,7 @@
                 <StackPanel Margin="20" Drop="AudioFiles_Drop" AllowDrop="true" Name="AudioFiles">
 
                     <!-- Scrollable List of Music Files -->
-                    <ListView ItemsSource="{Binding MusicPlayerMenager.MusicFilesList}" Background="#121212" BorderBrush="Transparent" Foreground="White" Height="400" HorizontalAlignment="Stretch">
+                    <ListView ItemsSource="{Binding MusicPlayerMenager.MusicFilesList}" Background="#121212" BorderBrush="Transparent" Foreground="White" Height="Auto" HorizontalAlignment="Stretch">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <Grid HorizontalAlignment="Stretch">
